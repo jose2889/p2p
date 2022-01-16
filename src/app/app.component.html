@@ -1,1 +1,78 @@
-<router-outlet></router-outlet>
+<div class="container">
+
+    <div class="row">
+      <h2>Registro de Ganancias - Binance</h2>
+     <h3>USDT DISPONIBLE: {{disponible}}</h3>
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="guardar()">
+       <div class="row">
+      
+          <div class="col-3">
+             <label for="cantidad" class="form-label">Cantidad</label>
+             <input type="text" class="form-control" name="cantidad" id="cantidad" formControlName="cantidad">
+           </div>
+
+          <div class="col-3">
+             <label for="precio" class="form-label">Precio</label>
+             <input type="text" class="form-control" name="precio" id="precio" formControlName="precio">
+           </div>
+ 
+           <div class="col-3">
+              <label for="precio" class="form-label">Tipo de Orden</label>
+             <select class="form-select" formControlName="tipo"> 
+                <option value="">Seleccione un Tipo</option>
+               <option value="1">Compra</option>
+                <option value="2">Venta</option>
+              </select>
+            </div>
+
+            <div class="col-3">
+              <label for="fecha" class="form-label">Fecha</label>
+                <div class="form-group">
+                    <div class="input-group">
+                       <input class="form-control" placeholder="dd-mm-aa"
+                        name="dp" ngbDatepicker #d="ngbDatepicker" formControlName="fecha" id="fecha">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">fecha</button>
+                         </div>
+                      </div>
+                  </div>
+            </div>  
+       </div> 
+    
+           <div class="row">
+              <div class=" col mb-3 my-3">
+               <button [disabled]="!this.formGroup.valid" class="btn btn-primary" type="submit">Guardar</button>
+               <button class="btn btn-secondary mx-2" type="reset">Limpiar</button>
+                <button class="btn btn-success" (click)="calcular()">Calcular</button>
+              </div>
+           </div>
+    
+      
+   </form>
+  
+
+
+
+            <table class="table mt-2 table-hover">
+                 <thead class="thead-light">
+                   <tr>
+                        <th scope="col">Nro Orden</th>
+                        <th scope="col">Tipo de Orden</th>
+                        <th scope="col">Cantiad</th>
+                        <th scope="col">Precio</th>
+                         <th scope="col">Fecha</th>
+                      </tr>
+                   </thead>
+                 <tbody *ngFor="let item of ordenes" [class]="item.tipo == 1 ? 'table-success' : 'table-danger'">
+                       <tr>
+                          <th scope="row">{{item.id}}</th>
+                          <td>{{item.tipo == 1 ? 'Compra' : 'Venta'}}</td>
+                          <td>{{item.cantidad}}</td>
+                          <td>{{item.precio}}</td>
+                          <td>{{item.fecha}}</td>
+                        </tr>
+                   </tbody>
+             </table>
+</div>
