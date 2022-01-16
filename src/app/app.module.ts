@@ -11,9 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { RegistroViejoComponent } from './registro-viejo/registro-viejo.component';
 import { registerLocaleData } from '@angular/common';
-import localeEsCl from '@angular/common/locales/es-cl';
+import localeEs from '@angular/common/locales/es';
 
-registerLocaleData(localeEsCl)
+registerLocaleData(localeEs)
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ registerLocaleData(localeEsCl)
     AngularFireModule.initializeApp(environment.firebase),
     NgbModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-cl' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
