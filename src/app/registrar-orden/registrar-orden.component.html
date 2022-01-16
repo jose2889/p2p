@@ -1,0 +1,82 @@
+<div style="text-align: center;">
+    <h2>Registro de Ordenes</h2>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-success m-5" (click)="open(content)">Agregar Orden</button>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Tipo</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of collection.data | paginate: config" [class]="item.tipo == 1 ? 'table-success' : 'table-danger'">
+          <td>{{item.fecha.day}}/{{item.fecha.month}}/{{item.fecha.year}}</td> 
+          <td>{{item.cantidad}}</td>
+          <td>{{item.precio}}</td>
+          <td>{{item.tipo == 1 ? 'Compra' : 'Venta'}}</td>
+          <td>
+            <button type="button" class="btn btn-primary mr-2" (click)="openEditar(content,item)">Editar</button>
+            <button type="button" class="btn btn-danger" (click)="eliminar(item)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crear o Editar Orden</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <form [formGroup]="estudianteForm">
+              <div class="form-group">
+                <label for="fecha" class="form-label">Fecha de la orden</label>
+                <div class="input-group">
+                  <input class="form-control" id="fecha" placeholder="yyyy-mm-dd"
+                         name="dp" formControlName="fecha" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                      <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                      <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                    </svg></button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cantidad" class="form-label">Cantidad</label>
+                <input type="text" class="form-control" name="cantidad" id="cantidad" formControlName="cantidad">
+              </div>
+            
+              <div class="form-group">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="text" class="form-control" name="precio" id="precio" formControlName="precio">
+              </div>
+              <div class="form-group">
+                
+                <label for="precio" class="form-label">Tipo de Orden</label>
+                <select class="form-control" formControlName="tipo"> 
+                  <option value="">Seleccione un Tipo</option>
+                  <option value="1">Compra</option>
+                  <option value="2">Venta</option>
+                </select>
+              </div>
+              
+            </form>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" [disabled]="estudianteForm.invalid" (click)="guardarEstudiante()" *ngIf="!actualizar">Guardar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="actualizarEstudiante()" *ngIf="actualizar">Actualizar</button>
+      </div>
+    </ng-template>
+  </div>

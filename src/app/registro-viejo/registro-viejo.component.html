@@ -1,0 +1,60 @@
+<div class="container">
+    <h2>Registro de Ganancias - Binance</h2>
+    <h3>USDT DISPONIBLE: {{disponible}}</h3>
+  <form [formGroup]="formGroup" (ngSubmit)="guardar()">
+  
+    <div class="mb-3">
+      <label for="cantidad" class="form-label">Cantidad</label>
+      <input type="text" class="form-control" name="cantidad" id="cantidad" formControlName="cantidad">
+    </div>
+  
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input type="text" class="form-control" name="precio" id="precio" formControlName="precio">
+    </div>
+   
+    <div class="mb-3">
+      <label for="precio" class="form-label">Tipo de Orden</label>
+    <select class="form-control" formControlName="tipo"> 
+      <option value="">Seleccione un Tipo</option>
+      <option value="1">Compra</option>
+      <option value="2">Venta</option>
+    </select>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+               name="dp" formControlName="fecha" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          </svg></button>
+        </div>
+      </div>
+    </div>
+    
+    <button [disabled]="!this.formGroup.valid" class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-secondary mx-2" type="reset">Limpiar</button>
+    <button class="btn btn-success" (click)="calcular()">Calcular</button>
+  </form>
+  
+  <table class="table mt-2 table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Nro Orden</th>
+        <th scope="col">Tipo de Orden</th>
+        <th scope="col">Cantiad</th>
+        <th scope="col">Precio</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of ordenes" [class]="item.tipo == 1 ? 'table-success' : 'table-danger'">
+      <tr>
+        <th scope="row">{{item.id}}</th>
+        <td>{{item.tipo == 1 ? 'Compra' : 'Venta'}}</td>
+        <td>{{item.cantidad}}</td>
+        <td>{{item.precio}}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
